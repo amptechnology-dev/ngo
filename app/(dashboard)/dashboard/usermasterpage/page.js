@@ -22,7 +22,7 @@ function Page({ initialFormData }) {
 
   useEffect(() => {
     setFormData(initialFormData || {});
-  }, [initialFormData]);mongodb://localhost:27018/?directConnection=true&replicaSet=rs0
+  }, [initialFormData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
