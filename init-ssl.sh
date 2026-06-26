@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DOMAIN="amptechnology.in"
+DOMAIN="bhagawanpurgp.com"
 EMAIL="devs.amptechnology@gmail.com"
 APP_CONTAINER="bhagabanpur"
 APP_PORT="3021"
