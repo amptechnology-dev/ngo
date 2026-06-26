@@ -1,12 +1,12 @@
 services:
   app:
     build: .
-    container_name: amp-office-frontend
+    container_name: bhagabanpur
     restart: unless-stopped
     env_file:
       - .env
     expose:
-      - "6010"
+      - "3021"
     networks:
       - app-network
 

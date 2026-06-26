@@ -3,8 +3,8 @@ set -e
 
 DOMAIN="amptechnology.in"
 EMAIL="devs.amptechnology@gmail.com"
-APP_CONTAINER="amp-office-frontend"
-APP_PORT="6010"
+APP_CONTAINER="bhagabanpur"
+APP_PORT="3021"
 
 # Reuse nginx + certbot from the backend project
 BACKEND_PROJECT_DIR="/root/amp_portal_backend"
