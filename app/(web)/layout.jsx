@@ -15,7 +15,7 @@ export const metadata = {
 
 async function getData() {
   try {
-    let officeData = await fetch(`${process.env.BACKLINK}/public/officeData`, {
+    const officeData = await fetch(`${process.env.BACKLINK}/public/officeData`, {
       headers: {
         "x-api-key": process.env.API_KEY,
         "office-id": process.env.OFFICE,
@@ -24,8 +24,9 @@ async function getData() {
         revalidate: 60,
       },
     });
+
     if (!officeData.ok) {
-      return console.error(`Failed to fetch office data: ${res.statusText}`);
+      return console.error(`Failed to fetch office data: ${officeData.statusText}`);
     }
 
     return officeData.json();
@@ -37,7 +38,7 @@ async function getData() {
 
 async function getLinks() {
   try {
-    let links = await fetch(`${process.env.BACKLINK}/public/social`, {
+    const links = await fetch(`${process.env.BACKLINK}/public/social`, {
       headers: {
         "x-api-key": process.env.API_KEY,
         "office-id": process.env.OFFICE,
@@ -59,16 +60,18 @@ async function getBg() {
     },
     cache: "no-store",
   });
+
   if (!res.ok) {
     return res.statusText;
   }
+
   return res.json();
 }
 
 export default async function RootLayout({ children }) {
-  let data = await getData();
+  const data = await getData();
   const officeData = data?.data;
-  let getSocial = await getLinks();
+  const getSocial = await getLinks();
   const socialData = getSocial?.data[0];
   const bg = await getBg();
 
@@ -81,8 +84,8 @@ export default async function RootLayout({ children }) {
           links={socialData}
           bg={bg.data?.headerImage}
         />
-        <Arrowup />
-        <WhatsAppButton />
+        {/* <Arrowup /> */}
+        {/* <WhatsAppButton /> */}
         {children}
         <Footer
           data={officeData}

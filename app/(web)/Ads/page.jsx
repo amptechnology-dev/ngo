@@ -3,7 +3,7 @@ import StaticImageSlider from "../components/Ads";
 
 async function getAdsData() {
   try {
-    let officeData = await fetch(`${process.env.BACKLINK}/public/officeData`, {
+    const officeResponse = await fetch(`${process.env.BACKLINK}/public/officeData`, {
       headers: {
         "x-api-key": process.env.API_KEY,
         "office-id": process.env.OFFICE,
@@ -12,7 +12,11 @@ async function getAdsData() {
         revalidate: 1000,
       },
     });
-    officeData = await officeData.json();
+    if (!officeResponse.ok) {
+      return null;
+    }
+
+    const officeData = await officeResponse.json();
     const isActive = officeData.data?.enabled_services?.includes("ads");
 
     if (!isActive) return;
@@ -22,7 +26,9 @@ async function getAdsData() {
         "x-api-key": process.env.API_KEY,
         "office-id": process.env.OFFICE,
       },
-      revalidate: 1000,
+      next: {
+        revalidate: 1000,
+      },
     });
 
     if (!res.ok) {

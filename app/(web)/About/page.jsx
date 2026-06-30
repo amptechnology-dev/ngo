@@ -25,7 +25,8 @@ async function getData() {
       next: { revalidate: 1000, },
     });
     if (!officeData.ok) {
-      return console.error(`Failed to fetch office data: ${res.statusText}`);
+      console.error(`Failed to fetch office data: ${officeData.statusText}`);
+      return null;
     }
 
     return officeData.json();

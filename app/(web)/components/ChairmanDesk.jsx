@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../styles/desk.module.css";
 
 async function getData() {
@@ -43,42 +44,78 @@ export default async function ChairmanDesk({ showFullDescription = true }) {
         <div className={styles.sectionHeader}>
           <span className={styles.sectionKicker}>Leadership</span>
           <h2 className={styles.sectionTitle}>{title}</h2>
-          <p className={styles.sectionSubtitle}>A brief message from the leadership team presented in a clean, public-facing format.</p>
+          <p className={styles.sectionSubtitle}>
+            A refined leadership section with a stronger visual hierarchy, clearer messaging, and a more professional public-service presentation.
+          </p>
+          <div className={styles.sectionMeta}>
+            <span>Public message</span>
+            <span>Citizen focused</span>
+            <span>Official leadership note</span>
+          </div>
         </div>
 
         {!data?.length && <div className={styles.emptyState}>Chairman desk information is not available right now.</div>}
 
         {data?.map((person, index) => (
-          <div key={index} className={styles.chairmanDesk}>
+          <article key={index} className={styles.chairmanDesk} aria-labelledby={`chair-${index}`}>
+            <div className={styles.imageSection}>
+              {person.image ? (
+                <div className={styles.imageFrame}>
+                  <Image
+                    src={`${process.env.BACKPUBLIC}/${person.image?.slice(7)}`}
+                    alt={person.name || "Portrait"}
+                    width={420}
+                    height={520}
+                    className={styles.portrait}
+                  />
+                  <div className={styles.imageBadge}>
+                    <span>{person.designation || "Chairman"}</span>
+                    <strong>{person.name}</strong>
+                  </div>
+                </div>
+              ) : (
+                <div className={styles.portraitPlaceholder}>No image</div>
+              )}
+            </div>
+
             <div className={styles.personMeta}>
-              <span className={styles.nameTag}>Chairman Desk</span>
-              <h3 className={styles.personName}>{person.name}</h3>
-              <p className={styles.deskDetails}>
-                {showFullDescription
-                  ? person.about
-                  : `${person.about?.slice(0, 500) || ""}...`}
-                {!showFullDescription && (
-                  <a href="/Desk" className={styles.readMoreLink}>
-                    Read More
-                  </a>
-                )}
+              <span className={styles.nameTag}>{person.designation || "Chairman"}</span>
+              <h3 id={`chair-${index}`} className={styles.personName}>{person.name}</h3>
+              <p className={styles.personLead}>
+                {person.designation || "Chairman"} {person.name ? `, ${person.name}` : ""}
               </p>
-              <div className={styles.featureRow}>
-                <span className={styles.featureChip}>Public Leadership</span>
-                <span className={styles.featureChip}>Citizen Message</span>
-                <span className={styles.featureChip}>Official Desk</span>
+
+              <div className={styles.quoteBlock}>
+                <span className={styles.quoteMark}>“</span>
+                <p className={styles.deskDetails}>
+                  {showFullDescription ? person.about : `${person.about?.slice(0, 450) || ""}${person.about?.length > 450 ? "..." : ""}`}
+                </p>
+              </div>
+
+              <div className={styles.infoGrid}>
+                <div className={styles.infoCard}>
+                  <span>Community</span>
+                  <strong>Service-first leadership</strong>
+                </div>
+                <div className={styles.infoCard}>
+                  <span>Focus</span>
+                  <strong>Transparent governance</strong>
+                </div>
+              </div>
+
+              <div className={styles.metaFooter}>
+                <div className={styles.featureRow}>
+                  <span className={styles.featureChip}>Public Leadership</span>
+                  <span className={styles.featureChip}>Citizen Message</span>
+                </div>
+
+                <div className={styles.contactButtons}>
+                  <Link href="/Desk" className={styles.btnOutline}>Read More</Link>
+                  <Link href="/contact" className={styles.btnPrimary}>Contact Office</Link>
+                </div>
               </div>
             </div>
-            <div className={styles.imageSection}>
-              <Image
-                src={`${process.env.BACKPUBLIC}/${person.image?.slice(7)}`}
-                alt={person.name}
-                width={260}
-                height={320}
-                className={styles.portrait}
-              />
-            </div>
-          </div>
+          </article>
         ))}
       </div>
     </section>

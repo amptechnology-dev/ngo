@@ -60,9 +60,9 @@ export default async function Home() {
       <Tender />
       <StatsCard />
       <About showFullDescription={false} />
+      <GallerySmall />
       <ChairmanDesk showFullDescription={false} />
       <Notifications />
-      <GallerySmall />
       <Ads />
       <ServiceGrid />
       <Team />
